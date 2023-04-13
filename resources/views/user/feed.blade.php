@@ -1,5 +1,5 @@
 @include('partials.header')
-@include('components.navbar')
+<x-navbar :user="$user"/>
 
 <div class="flex flex-col lg:flex-row">
     <div class="hidden lg:block lg:w-1/3 lg:m-4">

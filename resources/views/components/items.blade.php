@@ -3,7 +3,7 @@
         <a href="/" class="block py-2 pl-3 pr-4 text-white">Feed</a>
     </li>
     <li>
-        <a href="/profile" class="block py-2 pl-3 pr-4 text-white">Profile</a>
+        <a href="/profile/{{auth()->user()->id}}" class="block py-2 pl-3 pr-4 text-white">Profile</a>
     </li>
     <li>
         <form action="/logout" method="post">

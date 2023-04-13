@@ -28,19 +28,19 @@ class UserController extends Controller
     public function register(){
         return view('register');
     }
-    
-    
-    public function profile(){
-        $user = Auth::user();
-        //Get post from database
-        $posts = Post::with(['post_comment.user', 'user'])
-                        ->where('user_id', $user->id)
-                        ->orderBy('created_at', 'desc')
-                        ->get();
 
-        $posts->load('post_comment.user'); // load comment user relationships
-        
-        return view('user.profile', compact('user','posts'));
+    
+    public function profile($id){
+
+        $user = User::findOrFail($id);
+        if (Auth::id() === $user->id) {
+            // Authenticated user is viewing their own profile
+            $posts = Post::where('user_id', $user->id)->get();
+            return view('user.profile', ['user' => $user, 'posts' => $posts]);
+        } else {
+            // Authenticated user is viewing another user's profile
+            return view('user.otherUser', ['user' => $user]);
+        }
     }
 
     public function store(Request $request){
@@ -89,7 +89,6 @@ class UserController extends Controller
 
     public function feed(){
         $user = Auth::user();
-
         // Get posts from database
         $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         return view('user.feed', compact('user','posts'));
@@ -138,5 +137,9 @@ class UserController extends Controller
     return view('user.search_result', compact('users', 'query'));
 }
 
+    public function otherUser($id){
+        $user = User::all($id);
+        return view('user.otherUser', compact('user'));
+    }
 
 }

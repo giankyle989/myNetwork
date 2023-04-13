@@ -1,6 +1,5 @@
 @include('partials.header')
-<x-navbar/>
-
+<x-navbar :user="$user"/>
 <div class="flex flex-col lg:flex-row lg:justify-center gap-3 p-2">
     {{--Left Side--}}
     <div class="lg:h-screen lg:ml-4 lg:mt-2 lg:w-1/4 shrink-0 overflow-hidden">

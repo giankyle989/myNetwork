@@ -15,10 +15,11 @@
                         <p class="text-lg">{{$user->firstname}} {{$user->lastname}}</p>
                     </div>
                     <div>
-                        <button class="bg-sky-900 p-1.5 text-white rounded-md">Visit profile</button>
+                        <a href="/profile/otherUser/{{$user->id}}" class="bg-sky-900 p-1.5 text-white rounded-md">Visit profile</a>
                     </div>
                 </div>
             </li>
+            
             
         @endforeach
     </ul>
