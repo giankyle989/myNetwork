@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,4 @@ Route::post('/store/comment', [CommentController::class, 'comment']);
 Route::delete('/delete/post/{post}', [PostController::class, 'delete']);
 Route::delete('/delete/comment/{comment}', [CommentController::class, 'delete']);
 Route::get('/profile/otherUser/{user}', [UserController::class, 'otherUser']);
+Route::post('/like', [LikeController::class, 'toggle']);
