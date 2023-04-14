@@ -1,5 +1,5 @@
 @include('partials.header')
-<x-navbar/> 
+<x-navbar :user="$user"/> 
 <div class="h-screen flex justify-center items-center">
     
     {{-- Center Container--}}

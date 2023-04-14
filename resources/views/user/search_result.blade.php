@@ -1,5 +1,5 @@
 @include('partials.header')
-<x-navbar/>
+<x-navbar :user="$users"/>
 @if(count($users) > 0)
 <div class="h-screen gap-y-2">
     <div class="w-1/2 mx-auto text-center">
@@ -19,8 +19,6 @@
                     </div>
                 </div>
             </li>
-            
-            
         @endforeach
     </ul>
     </div>

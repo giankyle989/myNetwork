@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Rule;
 use App\Models\Post;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -32,7 +32,13 @@ class UserController extends Controller
     
     public function profile($id){
 
-        $user = User::findOrFail($id);
+        try {
+            $user = User::findOrFail($id);
+        } catch (ModelNotFoundException) {
+            // User not found, return error page
+            return view('error.profileError');
+        }
+        
         if (Auth::id() === $user->id) {
             // Authenticated user is viewing their own profile
             $posts = Post::where('user_id', $user->id)->get();
@@ -94,24 +100,21 @@ class UserController extends Controller
         return view('user.feed', compact('user','posts'));
     }
 
-    public function show(){
+    public function show($id){
+        $userId = User::findOrFail($id);
         $user = auth()->user();
         $countries = Country::all();
-        return view('user.edit', compact('user', 'countries'));
+        return view('user.edit', compact('user', 'countries','userId'));
     }
 
     public function update(Request $request){
 
         $user = Auth::user();
-
-
-
+        $userId = $user->id;
         // Update the user's name
         $user->firstname =$request->input('firstname');
         $user->lastname = $request->input('lastname');
         $user->country_id = $request->input('country');
-
-
         // Handle user's photo update
         if($request->hasFile('image')){
             $image_file = $request->file('image');
@@ -119,22 +122,20 @@ class UserController extends Controller
             $image_path = $image_file->storeAs('public/images', $image_name);
             $user->image = $image_path;
         }
-
-
-
         $user->save();
-    
-        return redirect('/profile');
+
+        return redirect("/profile/$userId");
     }
 
     public function searchUsers(Request $request)
 {
+    $userT = User::all();
     $query = $request->input('query');
     $users = User::where(function($queryBuilder) use ($query) {
         $queryBuilder->where('firstname', 'LIKE', '%'.$query.'%')
                      ->orWhere('lastname', 'LIKE', '%'.$query.'%');
     })->get();
-    return view('user.search_result', compact('users', 'query'));
+    return view('user.search_result', compact('users', 'query',));
 }
 
     public function otherUser($id){

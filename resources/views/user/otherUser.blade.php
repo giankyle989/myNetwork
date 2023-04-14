@@ -1,3 +1,4 @@
 @include('partials.header')
-Other user
+<x-navbar :user="$user"/>
+<x-otherUser_info :user="$user"/>
 @include('partials.footer')

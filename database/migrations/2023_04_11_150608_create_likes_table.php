@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->enum('status', ['liked', 'unliked'])->default('unliked');
+            $table->string('status')->default('liked');
             $table->timestamps();
         });
     }

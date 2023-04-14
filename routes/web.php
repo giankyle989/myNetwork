@@ -25,7 +25,7 @@ Route::post('/logout', [UserController::class, 'logout']);
 
 Route::get('/', [UserController::class, 'feed'])->middleware('auth');
 Route::get('/search', [UserController::class, 'searchUsers']);
-Route::get('/profile/edit', [UserController::class, 'show'])->middleware('auth');
+Route::get('/profile/edit/{user}', [UserController::class, 'show'])->middleware('auth');
 Route::put('/update', [UserController::class, 'update']);
 Route::post('/store/post', [PostController::class, 'post']);
 Route::post('/store/comment', [CommentController::class, 'comment']);

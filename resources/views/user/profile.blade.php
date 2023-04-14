@@ -7,7 +7,7 @@
             <x-user_info :user="$user">
                 <x-slot name="editProfile">
                     <div>
-                        <a href="/profile/edit" class="p-2 bg-sky-900 text-white rounded-full">Edit Profile</a>
+                        <a href="/profile/edit/{{$user->id}}" class="p-2 bg-sky-900 text-white rounded-full">Edit Profile</a>
                     </div>
                 </x-slot>
             </x-user_info>
