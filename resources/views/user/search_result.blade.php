@@ -15,7 +15,7 @@
                         <p class="text-lg">{{$user->firstname}} {{$user->lastname}}</p>
                     </div>
                     <div>
-                        <a href="/profile/otherUser/{{$user->id}}" class="bg-sky-900 p-1.5 text-white rounded-md">Visit profile</a>
+                        <a href="profile/{{$user->id}}" class="bg-sky-900 p-1.5 text-white rounded-md">Visit profile</a>
                     </div>
                 </div>
             </li>

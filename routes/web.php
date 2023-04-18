@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -21,7 +22,7 @@ Route::get('/login', [UserController::class, 'index'])->name('login')->middlewar
 Route::get('/register', [UserController::class, 'register']);
 Route::post('/store', [UserController::class, 'store']);
 Route::post('/login/process', [UserController::class, 'process']);
-Route::get('/profile/{user}', [UserController::class, 'profile'])->middleware('auth');
+Route::get('/profile/{user?}', [UserController::class, 'profile'])->middleware('auth');
 Route::post('/logout', [UserController::class, 'logout']);
 
 Route::get('/', [UserController::class, 'feed'])->middleware('auth');
@@ -32,5 +33,4 @@ Route::post('/store/post', [PostController::class, 'post']);
 Route::post('/store/comment', [CommentController::class, 'comment']);
 Route::delete('/delete/post/{post}', [PostController::class, 'delete']);
 Route::delete('/delete/comment/{comment}', [CommentController::class, 'delete']);
-Route::get('/profile/otherUser/{user}', [UserController::class, 'otherUser']);
 Route::post('/like', [LikeController::class, 'toggle']);

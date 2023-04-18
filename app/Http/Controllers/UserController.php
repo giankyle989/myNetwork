@@ -30,22 +30,24 @@ class UserController extends Controller
     }
 
     
-    public function profile($id){
-
-        try {
-            $user = User::findOrFail($id);
-        } catch (ModelNotFoundException) {
+    public function profile($user = null) {
+        if (!$user) {
+            $user = auth()->user();
+        }
+        
+        $user = User::find($user);
+        if (!$user) {
             // User not found, return error page
             return view('error.profileError');
         }
         
-        if (Auth::id() === $user->id) {
-            // Authenticated user is viewing their own profile
-            $posts = Post::where('user_id', $user->id)->get();
-            return view('user.profile', ['user' => $user, 'posts' => $posts]);
+        $isOwnProfile = Auth::id() === $user->id;
+        $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+    
+        if ($isOwnProfile) {
+            return view('user.profile', compact('user', 'posts'));
         } else {
-            // Authenticated user is viewing another user's profile
-            return view('user.otherUser', ['user' => $user]);
+            return view('user.otherUser', compact('user', 'posts'));
         }
     }
 
@@ -128,19 +130,17 @@ class UserController extends Controller
     }
 
     public function searchUsers(Request $request)
-{
-    $userT = User::all();
-    $query = $request->input('query');
-    $users = User::where(function($queryBuilder) use ($query) {
-        $queryBuilder->where('firstname', 'LIKE', '%'.$query.'%')
-                     ->orWhere('lastname', 'LIKE', '%'.$query.'%');
-    })->get();
-    return view('user.search_result', compact('users', 'query',));
-}
-
-    public function otherUser($id){
-        $user = User::all($id);
-        return view('user.otherUser', compact('user'));
+    {
+        $userT = User::all();
+        $query = $request->input('query');
+        $users = User::where(function($queryBuilder) use ($query) {
+            $queryBuilder->where('firstname', 'LIKE', '%'.$query.'%')
+                        ->orWhere('lastname', 'LIKE', '%'.$query.'%');
+        })->get();
+        return view('user.search_result', compact('users', 'query',));
     }
+
+
+
 
 }
