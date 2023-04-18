@@ -7,7 +7,7 @@
             <img class="h-12 w-12 rounded-full border-2 border-slate-300 object-cover" src="{{ Storage::url($comment->user->image) }}" alt="User photo">
         </div>
         <div class="bg-slate-200 overflow-hidden w-full flex-grow-1 rounded-md p-2 whitespace-normal">
-            <a href="profile/{{$comment->user->id}}">
+            <a href="/profile/{{$comment->user->id}}">
                 <h4 class="font-bold text-sm">{{ $comment->user->firstname }} {{ $comment->user->lastname }}</h4>
             </a>
             <p class="text-sm">{{ $comment->comment_text }}</p>
