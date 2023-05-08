@@ -12,5 +12,15 @@
         {{ $editProfile ?? ''}}
     </div>
 
-
+    @if(auth()->user()->isFollowing($user))
+    <form method="POST" action="{{ route('users.unfollow', $user->id) }}">
+        @csrf
+        <button type="submit" class="bg-sky-800 text-white p-2">Unfollow</button>
+    </form>
+    @else
+        <form method="POST" action="{{ route('users.follow', $user->id) }}">
+            @csrf
+            <button type="submit" class="bg-sky-800 text-white p-2">Follow</button>
+        </form>
+    @endif
 </div>

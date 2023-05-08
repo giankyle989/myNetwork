@@ -34,3 +34,5 @@ Route::post('/store/comment', [CommentController::class, 'comment']);
 Route::delete('/delete/post/{post}', [PostController::class, 'delete']);
 Route::delete('/delete/comment/{comment}', [CommentController::class, 'delete']);
 Route::post('/like', [LikeController::class, 'toggle']);
+Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
+Route::post('/users/{user}/unfollow', [UserController::class, 'follow'])->name('users.unfollow');

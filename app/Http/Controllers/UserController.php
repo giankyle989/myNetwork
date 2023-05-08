@@ -140,6 +140,16 @@ class UserController extends Controller
         return view('user.search_result', compact('users', 'query',));
     }
 
+    public function follow(User $user)
+    {
+        if (auth()->user()->isFollowing($user)) {
+            auth()->user()->unfollow($user);
+        } else {
+            auth()->user()->follow($user);
+        }
+
+        return back();
+    }
 
 
 
